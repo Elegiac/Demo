@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="std.demo.local.springmybatis.dao.ClassMapper">
+<!-- 开启二级缓存 -->
+<!--回收策略为先进先出--><!--自动刷新时间60s--><!--最多缓存512个引用对象--> <!--只读-->
+<!-- <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/> -->
+
+	<!-- 一对一关联：Class to Teacher -->
+	<!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+	<resultMap id="classResultMap1" type="Classes">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="id" column="c_id"/>
+		<!-- 用result属性来映射非主键字段 -->
+         <result property="name" column="c_name"/>
+         <association property="teacher" javaType="Teacher">
+             <id property="id" column="t_id"/>
+             <result property="name" column="t_name"/>
+         </association>
+	</resultMap>
+	
+	<select id="findClasses" resultMap="classResultMap1">
+		select c.id c_id,c.name c_name,t.id t_id,t.name t_name 
+		from class c join teacher t on c.t_id = t.id
+	</select>
+	
+	<!-- 一对多关联：Class to Student -->
+	<resultMap id="classResultMap2" type="Classes">
+		<id property="id" column="c_id"/>
+         <result property="name" column="c_name"/>
+         <association property="teacher" javaType="Teacher">
+             <id property="id" column="t_id"/>
+             <result property="name" column="t_name"/>
+         </association>
+         <!-- ofType指定students集合中的对象类型 -->
+         <collection property="students" ofType="Student">
+             <id property="id" column="s_id"/>
+             <result property="name" column="s_name"/>
+         </collection>
+	</resultMap>
+	
+	<select id="findClassesWithStudents" resultMap="classResultMap2">
+		select c.id c_id,c.name c_name,t.id t_id,t.name t_name,s.id s_id,s.name s_name 
+		from class c join teacher t on c.t_id = t.id join student s on s.c_id = c.id
+	</select>
+	
+	<select id="findClassesWithStudentsByIds" resultMap="classResultMap2">
+		select c.id c_id,c.name c_name,t.id t_id,t.name t_name,s.id s_id,s.name s_name 
+		from class c join teacher t on c.t_id = t.id join student s on s.c_id = c.id
+		
+		<if test="list.size()>0">
+		where c.id in
+			<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        	</foreach> 
+		</if>
+		
+	</select>
+</mapper>
