@@ -3,9 +3,9 @@
 
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>C:/Users/Administrator/Desktop/logs/demo/demo.log</file>
+		<file>C:/Users/yeahmobi/Desktop/logs/demo/demo.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>C:/Users/Administrator/Desktop/logs/demo/demo-%d{yyyy-MM-dd}.log
+			<fileNamePattern>C:/Users/yeahmobi/Desktop/logs/demo/demo-%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<maxHistory>180</maxHistory>
 		</rollingPolicy>
