@@ -4,6 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class sadsad {
 
@@ -56,17 +63,32 @@ public class sadsad {
 		
 		
 		
-		Process p= Runtime.getRuntime().exec("cmd /c type C:\\Users\\sinoadmin\\Desktop\\新建文本文档.txt");
-		InputStream in=p.getInputStream();
+//		Process p= Runtime.getRuntime().exec("cmd /c type C:\\Users\\sinoadmin\\Desktop\\新建文本文档.txt");
+//		InputStream in=p.getInputStream();
+//		
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(in,"gbk"));
+//		String tempString = null;
+//		// 按行读取号码文件
+//		while ((tempString = reader.readLine()) != null) {
+//			System.out.println(tempString);
+//		}
+//
+//		reader.close();
 		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in,"gbk"));
-		String tempString = null;
-		// 按行读取号码文件
-		while ((tempString = reader.readLine()) != null) {
-			System.out.println(tempString);
-		}
+		List<Integer> list = Arrays.asList(1,2,3,4,5);
+		
+		
+		Collections.sort(list,new Comparator<Integer>() {
 
-		reader.close();
+			@Override
+			public int compare(Integer o1, Integer o2) {
+
+				return o1.compareTo(o2);
+			}
+		});
+		
+//		Map map = new HashMap<>();
+//		map.get(null);
 	}
 
 }
