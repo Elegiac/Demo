@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
  *
  */
 public class Server {
-
+	//http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
 	public static void main(String[] args) {
 		// 5个线程的线程池
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);
