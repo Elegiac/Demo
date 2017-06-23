@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
  *
  */
 public class Server {
-	//http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
+	// http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
 	public static void main(String[] args) {
 		// 5个线程的线程池
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);
@@ -47,11 +47,14 @@ public class Server {
 
 		@Override
 		public void run() {
-			try (DataOutputStream out = new DataOutputStream(client.getOutputStream());
+			try (// 获取输出流
+					DataOutputStream out = new DataOutputStream(client.getOutputStream());
+					// 获取输入流
 					DataInputStream in = new DataInputStream(client.getInputStream());) {
 
+				// 读取数据
 				System.out.println("client:" + in.readUTF());
-
+				// 写出数据
 				out.writeUTF("recevied!");
 
 			} catch (IOException e) {
