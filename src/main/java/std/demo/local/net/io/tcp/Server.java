@@ -17,10 +17,14 @@ import java.util.concurrent.Executors;
 public class Server {
 	// http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
 	public static void main(String[] args) {
-		// 5个线程的线程池
+
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);
-		// 绑定监听端口
-		try (ServerSocket server = new ServerSocket(8888);) {
+
+		ServerSocket server = null;
+		try {
+			// 绑定监听端口
+			server = new ServerSocket(8888);
+
 			while (true) {
 				// 阻塞等待客户端连接
 				Socket client = server.accept();
@@ -29,6 +33,14 @@ public class Server {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (server != null) {
+				try {
+					server.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -47,11 +59,13 @@ public class Server {
 
 		@Override
 		public void run() {
-			try (// 获取输出流
-					DataOutputStream out = new DataOutputStream(client.getOutputStream());
-					// 获取输入流
-					DataInputStream in = new DataInputStream(client.getInputStream());) {
-
+			DataOutputStream out = null;
+			DataInputStream in = null;
+			try {
+				// 获取输出流
+				out = new DataOutputStream(client.getOutputStream());
+				// 获取输入流
+				in = new DataInputStream(client.getInputStream());
 				// 读取数据
 				System.out.println("client:" + in.readUTF());
 				// 写出数据
@@ -59,6 +73,17 @@ public class Server {
 
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					if (out != null) {
+						out.close();
+					}
+					if (in != null) {
+						in.close();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

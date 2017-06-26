@@ -6,7 +6,10 @@ import java.net.InetAddress;
 
 public class Server {
 	public static void main(String[] args) {
-		try (DatagramSocket server = new DatagramSocket(8888);) {
+		DatagramSocket server = null;
+		try {
+
+			server = new DatagramSocket(8888);
 
 			byte[] bytes = new byte[1024];
 
@@ -28,6 +31,8 @@ public class Server {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			server.close();
 		}
 	}
 }

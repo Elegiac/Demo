@@ -6,7 +6,9 @@ import java.net.InetAddress;
 
 public class Client {
 	public static void main(String[] args) {
-		try (DatagramSocket client = new DatagramSocket();) {
+		DatagramSocket client = null;
+		try {
+			client = new DatagramSocket();
 			String sendStr = "hellow";
 			byte[] sendBuf = sendStr.getBytes();
 			InetAddress addr = InetAddress.getByName("127.0.0.1");
@@ -20,6 +22,10 @@ public class Client {
 			System.out.println("server:" + recvStr);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (client != null) {
+				client.close();
+			}
 		}
 	}
 }
