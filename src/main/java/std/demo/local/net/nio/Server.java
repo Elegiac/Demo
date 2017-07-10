@@ -24,7 +24,7 @@ public class Server {
 
 		// 获取selector
 		selector = Selector.open();
-
+		
 		// 绑定服务端连接事件
 		// ServerSocketChannel只能绑定ACCEPT事件
 		server.register(selector, SelectionKey.OP_ACCEPT, messageHandler);
@@ -32,6 +32,8 @@ public class Server {
 		System.out.println("Listening 8888 port");
 		// 监听事件
 		Listening();
+		
+		
 	}
 
 	private void Listening() {
@@ -96,7 +98,13 @@ public class Server {
 
 				try {
 					ByteBuffer buffer = ByteBuffer.allocate(10);
-					channel.read(buffer);
+
+					int readLength = channel.read(buffer);
+					if (readLength == -1) {
+						System.out.println("客户端断开连接");
+						channel.close();
+						return;
+					}
 					byte[] data = buffer.array();
 					String msg = new String(data).trim();
 					System.out.println("clietn say:" + msg);

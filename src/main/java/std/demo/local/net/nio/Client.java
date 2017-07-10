@@ -102,7 +102,12 @@ public class Client {
 			public void onRead(SocketChannel channel) {
 				try {
 					ByteBuffer buffer = ByteBuffer.allocate(10);
-					channel.read(buffer);
+					int readLength = channel.read(buffer);
+					if (readLength == -1) {
+						System.out.println("服务端断开连接");
+						channel.close();
+						return;
+					}
 					byte[] data = buffer.array();
 					String msg = new String(data).trim();
 					System.out.println("Server say :" + msg);
