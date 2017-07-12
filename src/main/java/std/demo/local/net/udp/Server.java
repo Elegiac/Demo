@@ -1,4 +1,4 @@
-package std.demo.local.net.io.udp;
+package std.demo.local.net.udp;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -8,7 +8,7 @@ public class Server {
 	public static void main(String[] args) {
 		DatagramSocket server = null;
 		try {
-
+			//监听端口
 			server = new DatagramSocket(8888);
 
 			byte[] bytes = new byte[1024];

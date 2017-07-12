@@ -11,7 +11,7 @@ public class Server {
 
 		try (DatagramChannel channel = DatagramChannel.open()) {
 			channel.socket().bind(new InetSocketAddress(8888));
-
+			
 			ByteBuffer buf = ByteBuffer.allocate(1024);
 
 			SocketAddress address = channel.receive(buf);

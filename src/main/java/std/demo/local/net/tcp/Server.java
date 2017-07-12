@@ -1,4 +1,4 @@
-package std.demo.local.net.io.tcp;
+package std.demo.local.net.tcp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,16 +19,21 @@ public class Server {
 	// http://blog.csdn.net/he90227/article/details/39184247
 	// http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
 	// http://www.cnblogs.com/roverliang/p/5176456.html
+	//http://blog.csdn.net/kongxx/article/details/7288896
+	//http://www.51cto.com/specbook/11/40196.htm
+	//http://blog.csdn.net/u013322876/article/details/50556941?locationNum=2
 	public static void main(String[] args) {
 
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);
 
 		ServerSocket server = null;
 		try {
+			/** 监听端口 */
 			// 绑定监听端口
 			server = new ServerSocket(8888);
 
 			while (true) {
+				/** 获得连接 */
 				// 阻塞等待客户端连接
 				Socket client = server.accept();
 				// 与客户端交互交给工作线程去处理
@@ -69,11 +74,21 @@ public class Server {
 				out = new DataOutputStream(client.getOutputStream());
 				// 获取输入流
 				in = new DataInputStream(client.getInputStream());
-				// 读取数据
-				System.out.println("client:" + in.readUTF());
-				// 写出数据
-				out.writeUTF("recevied!");
 
+				while (true) {
+					// 读入数据
+					String readLine = in.readUTF();
+					System.out.println("client:" + readLine);
+
+					if ("exit".equalsIgnoreCase(readLine)) {
+						// 写出数据
+						out.writeUTF("bye!");
+						break;
+					}
+
+					// 写出数据
+					out.writeUTF("recevied!" + readLine);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
