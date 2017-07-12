@@ -17,8 +17,6 @@ import java.util.concurrent.Executors;
 public class Server {
 	// http://www.importnew.com/19816.html
 	// http://blog.csdn.net/he90227/article/details/39184247
-	// http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
-	// http://www.cnblogs.com/roverliang/p/5176456.html
 	//http://blog.csdn.net/kongxx/article/details/7288896
 	//http://www.51cto.com/specbook/11/40196.htm
 	//http://blog.csdn.net/u013322876/article/details/50556941?locationNum=2

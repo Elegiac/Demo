@@ -9,7 +9,7 @@ public class ByteBufferDemo {
 
 		// 无论是读数据还是写数据
 		// 都是从position开始
-		// 至多进行到limit
+		// 至多进行到limit-1
 		// 每读/写操作position+1(byte)/2(char)/......
 		// position > limit抛出BufferOverflowException
 
@@ -38,9 +38,7 @@ public class ByteBufferDemo {
 		// mark()/reset()
 		// 标记一个position/回到标记的position
 		
-		//test1();
-		
-		String msg = "bytebuffer读数据";
+		test1();
 		
 		
 		
@@ -52,15 +50,15 @@ public class ByteBufferDemo {
 
 		printBufferDetail(buffer);
 
-		putBytesAndPrint(buffer, 3);
+		putBytesAndPrint(buffer, 2);
 
 		flipAndPrint(buffer);
 
-		getBytesAndPrint(buffer, 3);
+		getBytesAndPrint(buffer, 2);
 
 		rewindAndPrint(buffer);
 
-		getBytesAndPrint(buffer, 3);
+		getBytesAndPrint(buffer, 2);
 
 		clearAndPrint(buffer);
 
