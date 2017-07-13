@@ -1,4 +1,4 @@
-package std.demo.local.net.nio;
+package std.demo.local.socket.nio;
 
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -6,8 +6,6 @@ import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-
-import org.springframework.web.client.RestTemplate;
 
 public class Test {
 

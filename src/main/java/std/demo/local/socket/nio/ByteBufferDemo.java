@@ -1,7 +1,6 @@
-package std.demo.local.net.nio;
+package std.demo.local.socket.nio;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 
 public class ByteBufferDemo {
 

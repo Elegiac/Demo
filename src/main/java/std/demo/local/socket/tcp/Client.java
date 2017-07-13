@@ -1,4 +1,4 @@
-package std.demo.local.net.tcp;
+package std.demo.local.socket.tcp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * IO 客户端
+ * socket 客户端
  * 
  * @author yeahmobi
  *
