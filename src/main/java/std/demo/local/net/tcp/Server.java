@@ -1,4 +1,4 @@
-package std.demo.local.socket.tcp;
+package std.demo.local.net.tcp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

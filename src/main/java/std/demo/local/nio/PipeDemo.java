@@ -1,4 +1,4 @@
-package std.demo.local.socket.nio;
+package std.demo.local.nio;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

@@ -1,6 +1,12 @@
-package std.demo.local.socket.nio;
+package std.demo.local.nio;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
@@ -9,8 +15,8 @@ import java.nio.charset.CharsetDecoder;
 
 public class Test {
 
-	public static void main(String[] args) {
-		method1();
+	public static void main(String[] args) throws IOException {
+		// method1();
 	}
 
 	public static void method1() {

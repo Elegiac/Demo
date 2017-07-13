@@ -1,4 +1,4 @@
-package std.demo.local.socket.nio.udp;
+package std.demo.local.nio.udp;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;

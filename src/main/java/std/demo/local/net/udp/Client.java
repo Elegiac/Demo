@@ -1,4 +1,4 @@
-package std.demo.local.socket.udp;
+package std.demo.local.net.udp;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
