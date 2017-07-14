@@ -23,6 +23,7 @@ public class Server {
 	// http://www.365mini.com/page/java-nio-course-26.htm
 	// http://blog.csdn.net/u010412719/article/details/52809669
 	// http://zhhphappy.iteye.com/blog/2032893
+	// http://www.cnblogs.com/fengjian/p/5606045.html
 	public static void main(String[] args) {
 
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);

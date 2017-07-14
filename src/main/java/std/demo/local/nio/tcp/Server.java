@@ -7,11 +7,16 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 
 import std.demo.local.nio.ClientInfo;
 
 public class Server {
+
+	Charset charset = Charset.forName("UTF-8");
+	CharsetDecoder decoder = charset.newDecoder();
 
 	// 选择器
 	private Selector selector = null;
@@ -129,30 +134,46 @@ public class Server {
 		// 获取ByteBuffer
 		ByteBuffer buffer = clientInfo.getBuffer();
 
-		int length = channel.read(buffer);
+		String readLine = readToString(channel, buffer);
 
 		// 有读事件但读取数据长度为-1 说明客户端连接断开
-		if (length == -1) {
+		if (readLine == null) {
 			System.out.println(" closed");
 			channel.close();
 			return;
 		}
 
-		if (length > 0) {
-			String readLine = new String(buffer.array(), "utf-8");
+		System.out.println(":" + readLine);
 
-			buffer.clear();
-
-			System.out.println(":" + readLine);
-
-			if ("exit".equalsIgnoreCase(readLine)) {
-				return;
-			}
-
-			// 回显
-			channel.write(ByteBuffer.wrap(readLine.getBytes("utf-8")));
+		if ("exit".equalsIgnoreCase(readLine)) {
+			return;
 		}
 
+		// 回显
+		channel.write(ByteBuffer.wrap(readLine.getBytes("utf-8")));
+	}
+
+	public String readToString(SocketChannel channel, ByteBuffer buffer) throws IOException {
+
+		int bytesRead = channel.read(buffer);
+
+		if (bytesRead == -1) {
+			return null;
+		}
+
+		StringBuilder builder = new StringBuilder();
+
+		while (bytesRead > 0) {
+			buffer.flip();
+
+			// 对读取到的bytebuffer进行编码 编码后的char放入charbuffer
+			builder.append(decoder.decode(buffer));
+
+			buffer.clear();
+			bytesRead = channel.read(buffer);
+		}
+
+		return builder.toString();
 	}
 
 	public void close() {
