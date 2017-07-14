@@ -7,18 +7,11 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 
 import std.demo.local.nio.ClientInfo;
 
 public class Server {
-
-	// 字符集
-	private Charset charset = Charset.forName("UTF-8");
-	// 解码器
-	private CharsetDecoder decoder = charset.newDecoder();
 
 	// 选择器
 	private Selector selector = null;
@@ -95,31 +88,6 @@ public class Server {
 		}
 	}
 
-	public String readToString(SocketChannel channel, ByteBuffer buffer) throws IOException {
-
-		// 从通道中将数据读入缓冲区
-		int bytesRead = channel.read(buffer);
-
-		if (bytesRead == -1) {
-			return null;
-		}
-
-		StringBuilder builder = new StringBuilder();
-
-		// 循环读取
-		while (bytesRead > 0) {
-			buffer.flip();
-
-			// 对读取到的bytebuffer进行编码 编码后的char放入charbuffer
-			builder.append(decoder.decode(buffer));
-
-			buffer.clear();
-			bytesRead = channel.read(buffer);
-		}
-
-		return builder.toString();
-	}
-
 	/**
 	 * ACCEPT事件处理
 	 * 
@@ -137,7 +105,7 @@ public class Server {
 		// 将与客户端通信的通道注册到selector上 监听READ事件
 		// 并为其分配一个ClientInfo实例 在后续的处理中可以通过SelectionKey获取该ClientInfo
 
-		ClientInfo info = new ClientInfo(sc.getRemoteAddress(), ByteBuffer.allocate(1024), ByteBuffer.allocate(1024));
+		ClientInfo info = new ClientInfo(sc.getRemoteAddress(), ByteBuffer.allocate(1024));
 
 		System.out.println(info);
 		// 监听读事件
@@ -159,25 +127,32 @@ public class Server {
 		ClientInfo clientInfo = (ClientInfo) key.attachment();
 		System.out.print(clientInfo);
 		// 获取ByteBuffer
-		ByteBuffer buffer = clientInfo.getReadBuffer();
+		ByteBuffer buffer = clientInfo.getBuffer();
 
-		String readLine = readToString(channel, buffer);
+		int length = channel.read(buffer);
 
 		// 有读事件但读取数据长度为-1 说明客户端连接断开
-		if (readLine == null) {
+		if (length == -1) {
 			System.out.println(" closed");
 			channel.close();
 			return;
 		}
 
-		System.out.println(":" + readLine);
+		if (length > 0) {
+			String readLine = new String(buffer.array(), "utf-8");
 
-		if ("exit".equalsIgnoreCase(readLine)) {
-			return;
+			buffer.clear();
+
+			System.out.println(":" + readLine);
+
+			if ("exit".equalsIgnoreCase(readLine)) {
+				return;
+			}
+
+			// 回显
+			channel.write(ByteBuffer.wrap(readLine.getBytes("utf-8")));
 		}
 
-		// 回显
-		channel.write(ByteBuffer.wrap(readLine.getBytes("utf-8")));
 	}
 
 	public void close() {

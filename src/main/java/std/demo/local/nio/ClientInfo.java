@@ -7,14 +7,12 @@ public class ClientInfo {
 
 	private SocketAddress address;
 
-	private ByteBuffer readBuffer;
-	private ByteBuffer writeBuffer;
+	private ByteBuffer buffer;
 
-	public ClientInfo(SocketAddress address, ByteBuffer readBuffer, ByteBuffer writeBuffer) {
+	public ClientInfo(SocketAddress address, ByteBuffer buffer) {
 		super();
 		this.address = address;
-		this.readBuffer = readBuffer;
-		this.writeBuffer = writeBuffer;
+		this.buffer = buffer;
 	}
 
 	public SocketAddress getAddress() {
@@ -25,20 +23,12 @@ public class ClientInfo {
 		this.address = address;
 	}
 
-	public ByteBuffer getReadBuffer() {
-		return readBuffer;
+	public ByteBuffer getBuffer() {
+		return buffer;
 	}
 
-	public void setReadBuffer(ByteBuffer readBuffer) {
-		this.readBuffer = readBuffer;
-	}
-
-	public ByteBuffer getWriteBuffer() {
-		return writeBuffer;
-	}
-
-	public void setWriteBuffer(ByteBuffer writeBuffer) {
-		this.writeBuffer = writeBuffer;
+	public void setBuffer(ByteBuffer buffer) {
+		this.buffer = buffer;
 	}
 
 	@Override
