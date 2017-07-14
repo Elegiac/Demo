@@ -137,10 +137,10 @@ public class Server {
 		// 将与客户端通信的通道注册到selector上 监听READ事件
 		// 并为其分配一个ClientInfo实例 在后续的处理中可以通过SelectionKey获取该ClientInfo
 
-		ClientInfo info = new ClientInfo(sc.getRemoteAddress(), ByteBuffer.allocate(1024));
+		ClientInfo info = new ClientInfo(sc.getRemoteAddress(), ByteBuffer.allocate(1024), ByteBuffer.allocate(1024));
 
 		System.out.println(info);
-
+		// 监听读事件
 		sc.register(key.selector(), SelectionKey.OP_READ, info);
 
 	}
@@ -159,7 +159,7 @@ public class Server {
 		ClientInfo clientInfo = (ClientInfo) key.attachment();
 		System.out.print(clientInfo);
 		// 获取ByteBuffer
-		ByteBuffer buffer = clientInfo.getBuffer();
+		ByteBuffer buffer = clientInfo.getReadBuffer();
 
 		String readLine = readToString(channel, buffer);
 
