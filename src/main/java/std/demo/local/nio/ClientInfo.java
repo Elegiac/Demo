@@ -1,4 +1,4 @@
-package std.demo.local.nio.tcp;
+package std.demo.local.nio;
 
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
