@@ -22,6 +22,8 @@ public class ChannelInteractor {
 
 	private CharBuffer charBuffer;
 
+	private String writeMessage;
+
 	public ChannelInteractor(SocketAddress address, int bufferCapacity, String charsetName) {
 		this.address = address;
 		this.byteBuffer = ByteBuffer.allocate(bufferCapacity);
@@ -39,12 +41,12 @@ public class ChannelInteractor {
 		this.address = address;
 	}
 
-	public ByteBuffer getByteBuffer() {
-		return byteBuffer;
+	public synchronized String getWriteMessage() {
+		return writeMessage;
 	}
 
-	public void setByteBuffer(ByteBuffer byteBuffer) {
-		this.byteBuffer = byteBuffer;
+	public synchronized void setWriteMessage(String writeMessage) {
+		this.writeMessage = writeMessage;
 	}
 
 	public void write(WritableByteChannel channel, String msg) throws IOException {

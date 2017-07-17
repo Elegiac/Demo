@@ -1,23 +1,20 @@
 package std.demo.local.nio.tcp;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class Client {
-	Charset charset = Charset.forName("UTF-8");
-	CharsetDecoder decoder = charset.newDecoder();
+import std.demo.local.nio.ChannelInteractor;
 
-	private Selector selector = null;
-	private SocketChannel socketChannel = null;
+public class Client {
+	private Selector selector;
+	private SocketChannel socketChannel;
+
+	private ChannelInteractor interactor;
 
 	private boolean shutdown = false;
 
@@ -31,8 +28,11 @@ public class Client {
 			selector = Selector.open();
 			// 将通道注册到selector上 监听CONNECT事件
 			socketChannel.register(selector, SelectionKey.OP_CONNECT);
+			InetSocketAddress address = new InetSocketAddress(ip, port);
 			// 连接服务端
 			socketChannel.connect(new InetSocketAddress(ip, port));
+
+			interactor = new ChannelInteractor(address, 1024, "UTF-8");
 
 			// 轮询selector
 			new Thread(new Runnable() {
@@ -91,7 +91,6 @@ public class Client {
 		}
 
 		key.interestOps(SelectionKey.OP_READ);
-		key.attach(ByteBuffer.allocate(1024));
 	}
 
 	/**
@@ -103,8 +102,8 @@ public class Client {
 	public void onRead(SelectionKey key) throws IOException {
 		System.out.print("onRead->");
 		SocketChannel channel = (SocketChannel) key.channel();
-		ByteBuffer buffer = (ByteBuffer) key.attachment();
-		String readLine = readToString(channel, buffer);
+
+		String readLine = interactor.read(channel);
 
 		if (readLine == null) {
 			System.out.println("server closed");
@@ -113,33 +112,6 @@ public class Client {
 		}
 
 		System.out.println(":" + readLine);
-	}
-
-	public String readToString(SocketChannel channel, ByteBuffer buffer) throws IOException {
-
-		int bytesRead = channel.read(buffer);
-
-		if (bytesRead == -1) {
-			return null;
-		}
-
-		StringBuilder builder = new StringBuilder();
-
-		while (bytesRead > 0) {
-			buffer.flip();
-
-			// 对读取到的bytebuffer进行编码 编码后的char放入charbuffer
-			builder.append(decoder.decode(buffer));
-
-			buffer.clear();
-			bytesRead = channel.read(buffer);
-		}
-
-		return builder.toString();
-	}
-
-	public void write(String msg) throws UnsupportedEncodingException, IOException {
-		this.socketChannel.write(ByteBuffer.wrap(msg.getBytes("utf-8")));
 	}
 
 	public void close() {
@@ -161,6 +133,10 @@ public class Client {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void write(String msg) throws IOException {
+		interactor.write(socketChannel, msg);
 	}
 
 	public static void main(String[] args) {
