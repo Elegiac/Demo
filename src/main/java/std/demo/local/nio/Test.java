@@ -1,23 +1,15 @@
 package std.demo.local.nio;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
-import java.io.WriteAbortedException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 
 public class Test {
 
@@ -27,40 +19,16 @@ public class Test {
 		method2();
 	}
 
-	static void write(WritableByteChannel channel,String msg) throws IOException {
-		Charset charset = Charset.forName("GBK");
-		CharsetEncoder encoder = charset.newEncoder();
-		
-		ByteBuffer bb = ByteBuffer.allocate(5);
-		CharBuffer cb = CharBuffer.allocate(5);
-
-		for (int i = 0; i < msg.length(); i++) {
-			if (cb.hasRemaining()) {
-				cb.put(msg.charAt(i));
-			} else {
-				cb.flip();
-
-				while (cb.hasRemaining()) {
-					encoder.encode(cb, bb, false);
-					bb.flip();
-					
-					channel.write(bb);
-					
-					bb.clear();
-				}
-				
-				cb.clear();
-			}
-		}
-	}
-	
-	
-	
-	
-	
-	
 	public static void method2() throws IOException {
-		
+
+		ChannelInteractor i = new ChannelInteractor(null, 5, "utf-8");
+
+		FileInputStream in = new FileInputStream("C:\\Users\\yeahmobi\\Desktop\\test.txt");
+
+		FileChannel fci = in.getChannel();
+
+		String msg = i.read(fci);
+
 		File file = new File("C:\\Users\\yeahmobi\\Desktop\\test\\", "test.txt");
 
 		if (!file.getParentFile().exists()) {
@@ -69,16 +37,17 @@ public class Test {
 		if (file.exists()) {
 			file.delete();
 		}
-		
+
 		file.createNewFile();
-		
-		FileInputStream in = new FileInputStream(file);
-		
-		FileChannel fc = in.getChannel();
-		
-		write(fc, "绯闻啊所发生的v覅陪我1213213");
-		
+
+		FileOutputStream out = new FileOutputStream(file);
+
+		FileChannel fco = out.getChannel();
+
+		i.write(fco, msg);
+
 		in.close();
+		out.close();
 	}
 
 	public static void method1() {

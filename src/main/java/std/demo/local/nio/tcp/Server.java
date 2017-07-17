@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 
-import std.demo.local.nio.ClientInfo;
+import std.demo.local.nio.ChannelInteractor;
 
 public class Server {
 
@@ -110,11 +110,14 @@ public class Server {
 		// 将与客户端通信的通道注册到selector上 监听READ事件
 		// 并为其分配一个ClientInfo实例 在后续的处理中可以通过SelectionKey获取该ClientInfo
 
-		ClientInfo info = new ClientInfo(sc.getRemoteAddress(), ByteBuffer.allocate(1024));
+		ChannelInteractor interactor = new ChannelInteractor(sc.getRemoteAddress(), 1024, "UTF-8");
 
-		System.out.println(info);
+		// ClientInfo info = new ClientInfo(sc.getRemoteAddress(),
+		// ByteBuffer.allocate(1024));
+
+		System.out.println(interactor);
 		// 监听读事件
-		sc.register(key.selector(), SelectionKey.OP_READ, info);
+		sc.register(key.selector(), SelectionKey.OP_READ, interactor);
 
 	}
 
@@ -129,10 +132,10 @@ public class Server {
 		// 获取与客户端通信的通道
 		SocketChannel channel = (SocketChannel) key.channel();
 		// 获取之前为该通道分配的ClientInfo
-		ClientInfo clientInfo = (ClientInfo) key.attachment();
-		System.out.print(clientInfo);
+		ChannelInteractor interactor = (ChannelInteractor) key.attachment();
+		System.out.print(interactor);
 		// 获取ByteBuffer
-		ByteBuffer buffer = clientInfo.getBuffer();
+		ByteBuffer buffer = interactor.getByteBuffer();
 
 		String readLine = readToString(channel, buffer);
 
