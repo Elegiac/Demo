@@ -6,17 +6,11 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 
 import std.demo.local.nio.ChannelInteractor;
 
 public class Server {
-
-	Charset charset = Charset.forName("UTF-8");
-	CharsetDecoder decoder = charset.newDecoder();
-
 	// 选择器
 	private Selector selector = null;
 	// TCP服务端通道
