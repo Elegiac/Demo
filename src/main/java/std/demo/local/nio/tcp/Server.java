@@ -83,6 +83,10 @@ public class Server {
 						onRead(key);
 					}
 
+					if (key.isValid() && key.isWritable()) {
+
+					}
+
 				} catch (Exception e) {
 					e.printStackTrace();
 					key.channel().close();
@@ -134,10 +138,8 @@ public class Server {
 		// 获取之前为该通道分配的ClientInfo
 		ChannelInteractor interactor = (ChannelInteractor) key.attachment();
 		System.out.print(interactor);
-		// 获取ByteBuffer
-		ByteBuffer buffer = interactor.getByteBuffer();
 
-		String readLine = readToString(channel, buffer);
+		String readLine = interactor.read(channel);
 
 		// 有读事件但读取数据长度为-1 说明客户端连接断开
 		if (readLine == null) {
@@ -153,7 +155,7 @@ public class Server {
 		}
 
 		// 回显
-		channel.write(ByteBuffer.wrap(readLine.getBytes("utf-8")));
+		interactor.write(channel, readLine);
 	}
 
 	public String readToString(SocketChannel channel, ByteBuffer buffer) throws IOException {

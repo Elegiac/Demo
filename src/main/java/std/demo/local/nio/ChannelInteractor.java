@@ -79,9 +79,13 @@ public class ChannelInteractor {
 	public String read(ReadableByteChannel channel) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		boolean readNothing = true;
+		int count = -1;
 		// 循环读取
-		while (channel.read(byteBuffer) != -1) {
+		while ((count = channel.read(byteBuffer)) != -1) {
 			readNothing = false;
+			if (count == 0) {
+				break;
+			}
 			// byteBuffer切换到写模式
 			byteBuffer.flip();
 			// 将byteBuffer的内容解码到charBuffer
