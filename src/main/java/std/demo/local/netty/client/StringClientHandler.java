@@ -1,4 +1,4 @@
-package std.demo.local.socket.netty.client;
+package std.demo.local.netty.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

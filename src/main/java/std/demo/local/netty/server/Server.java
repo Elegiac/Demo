@@ -1,4 +1,4 @@
-package std.demo.local.socket.netty.server;
+package std.demo.local.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

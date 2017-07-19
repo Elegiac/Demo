@@ -10,6 +10,8 @@ import java.util.Iterator;
 
 import std.demo.local.nio.ChannelInteractor;
 
+//http://xw-z1985.iteye.com/category/260393
+//http://www.365mini.com/page/java-nio-course-1.htm
 public class Server {
 	// 选择器
 	private Selector selector = null;

@@ -15,15 +15,7 @@ import java.util.concurrent.Executors;
  *
  */
 public class Server {
-	// http://www.importnew.com/19816.html
-	// http://blog.csdn.net/he90227/article/details/39184247
-	// http://blog.csdn.net/kongxx/article/details/7288896
-	// http://www.51cto.com/specbook/11/40196.htm
-	// http://blog.csdn.net/u013322876/article/details/50556941?locationNum=2
-	// http://www.365mini.com/page/java-nio-course-26.htm
-	// http://blog.csdn.net/u010412719/article/details/52809669
-	// http://zhhphappy.iteye.com/blog/2032893
-	// http://www.cnblogs.com/fengjian/p/5606045.html
+
 	public static void main(String[] args) {
 
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);

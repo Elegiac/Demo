@@ -163,7 +163,7 @@ public class QRCode {
 
 	public static void main(String[] args) throws WriterException, IOException,
 			NotFoundException {
-		String filePath = "C:\\Users\\sinoadmin\\Desktop\\";
+		String filePath = "‪C:\\Users\\yeahmobi\\Desktop\\";
 		String fileName = "test.png";
 		String content = "扫扫扫，有什么好扫的";
 		QRCode q = new QRCode();
