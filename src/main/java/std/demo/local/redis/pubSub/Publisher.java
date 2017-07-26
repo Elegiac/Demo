@@ -16,8 +16,7 @@ public class Publisher {
 	}
 
 	public void start() {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		Jedis jedis = jedisPool.getResource();
 		while (true) {
 			String line = null;

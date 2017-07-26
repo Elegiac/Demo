@@ -63,13 +63,13 @@ public class ChannelInteractor {
 	}
 
 	private void writeToChannel(WritableByteChannel channel) throws IOException {
-		// charBuffer切换到写模式
+		// charBuffer切换到读模式
 		charBuffer.flip();
 		// 循环写出
 		while (charBuffer.hasRemaining()) {
 			// 将charBuffer的内容编码到byteBuffer
 			encoder.encode(charBuffer, byteBuffer, false);
-			// byteBuffer切换到写模式
+			// byteBuffer切换到读模式
 			byteBuffer.flip();
 			// byteBuffer向通道写出数据
 			channel.write(byteBuffer);
@@ -88,11 +88,11 @@ public class ChannelInteractor {
 			if (count == 0) {
 				break;
 			}
-			// byteBuffer切换到写模式
+			// byteBuffer切换到读模式
 			byteBuffer.flip();
 			// 将byteBuffer的内容解码到charBuffer
 			decoder.decode(byteBuffer, charBuffer, false);
-			// charBuffer切换到写模式
+			// charBuffer切换到读模式
 			charBuffer.flip();
 			while (charBuffer.hasRemaining()) {
 				// 循环拼接字符

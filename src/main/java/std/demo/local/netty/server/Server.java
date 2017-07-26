@@ -6,6 +6,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+//netty源码分析
+//https://segmentfault.com/a/1190000007282628
 public class Server {
 	/**
 	 * 服务端监听的端口地址

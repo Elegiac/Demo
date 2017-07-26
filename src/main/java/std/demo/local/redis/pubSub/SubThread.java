@@ -17,10 +17,7 @@ public class SubThread extends Thread {
 
 	@Override
 	public void run() {
-		System.out
-				.println(String.format(
-						"subscribe redis, channel %s, thread will be blocked",
-						channel));
+		System.out.println(String.format("subscribe redis, channel %s, thread will be blocked", channel));
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
