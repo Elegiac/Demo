@@ -1,7 +1,6 @@
 package std.demo.local.nio;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.Pipe;
 import java.util.Scanner;
 
@@ -32,14 +31,10 @@ public class PipeDemo {
 				try {
 					Pipe.SourceChannel sourceChannel = pipe.source();
 
-					ByteBuffer buffer = ByteBuffer.allocate(1024);
-
-					while (sourceChannel.read(buffer) != -1) {
-						buffer.flip();
-
-						System.out.println("接收端接收:" + new String(buffer.array(), "utf-8"));
-
-						buffer.clear();
+					ChannelInteractor i = new ChannelInteractor(null, 1024, "UTF-8");
+					
+					while (true) {
+						System.out.println(i.read(sourceChannel));
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -59,10 +54,13 @@ public class PipeDemo {
 				try {
 					// 获取写通道
 					Pipe.SinkChannel sinkChannel = pipe.sink();
+					
+					ChannelInteractor i = new ChannelInteractor(null, 1024, "UTF-8");
+					
 					scan = new Scanner(System.in);
 					while (true) {
 						String readLine = scan.nextLine();
-						sinkChannel.write(ByteBuffer.wrap(readLine.getBytes("utf-8")));
+						i.write(sinkChannel, readLine);
 						System.out.println("发送端发送:" + readLine);
 					}
 				} catch (IOException e) {

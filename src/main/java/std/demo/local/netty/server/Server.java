@@ -30,7 +30,7 @@ public class Server {
 			f.channel().closeFuture().sync();
 
 			// 可以简写为
-			/* b.bind(portNumber).sync().channel().closeFuture().sync(); */
+			// b.bind(portNumber).sync().channel().closeFuture().sync();
 		} finally {
 			// 优雅关闭
 			bossGroup.shutdownGracefully();
