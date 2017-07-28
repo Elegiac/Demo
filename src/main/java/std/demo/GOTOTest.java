@@ -1,6 +1,6 @@
 package std.demo;
 
-public class Abc {
+public class GOTOTest {
 
 	public static void main(String[] args) {
 

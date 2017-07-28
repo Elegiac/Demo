@@ -164,20 +164,10 @@ public class HttpUtil {
 
 	public static void main(String[] args) throws ClientProtocolException, IOException {
 		String key = "make it happened";
-		
-		String  a=  "715E9E7FF6460995004A19B6D20D43473A8124BA56AC18F66C5A5D18F246AA5F85A92C43E926285445FE3CA13846BBC12ED28A6661C2A9E34FA3ED3E60E517220E264FDE629B0773C6AF1CA42CC494E604721C705BB9FC4A675206C2A2CF04EF14DC3705797543CE24D7E3511CB40704E2D9E47C2801B9A4053BD64E1BA354298CD76B5EA28B94F779EA0EB879B7BDDD62CB7637ED3AC99AC06DFB97850BB9ECAA9749FBD7C9A12E46A00DF57D77F161BD1C43EECE0DD8F08078EC43A333C1337E1DE58CB40EA67438AEB8AF8B41EF5CD7C9EA90AE7EB747FD2763FD8677EF99DEF6F8A6A9885E22AC2BB23AE38157143E10C42520BC669755E7081E1BB1CC82229F8C2727DF08124B9B69444F241744C451306D1D60E5F9392702F6EC3F7DD89D59D3A4DFE8B6530D2D142C2AB2694C";
-		
-		
-	
-		
-		//https://segmentfault.com/a/1190000007282628
-		// http://blog.csdn.net/u011179993/article/category/5694697
-
-		
 
 		String s = "sign=4489F7231F6CD4DEF6F2B7FD8D2305F0&timestamp=1500455930747&v=1.0&categorys=005007&appId=app_gkt_lookerplus_5714&isSex=0&method=content.wallpaper.recommand.list&imsi=460026408885439&format=json&group=61&deviceId=861022004611283&appSecret=2b45451eb109";
 
-	s = "sign=83258A0E6D1BA255F5F6E743A141ABC4&timestamp=1500455930906&parentId=005007&v=1.0&appId=app_gkt_lookerplus_5714&method=content.category.child.list&format=json&appSecret=2b45451eb109";
+		s = "sign=83258A0E6D1BA255F5F6E743A141ABC4&timestamp=1500455930906&parentId=005007&v=1.0&appId=app_gkt_lookerplus_5714&method=content.category.child.list&format=json&appSecret=2b45451eb109";
 		s = "sign=86205AD2C32B67F753F3A0D7F57A9278&timestamp=1500455930863&v=1.0&appId=app_gkt_lookerplus_5714&isSex=0&pageNo=0&categoryId=005007&pageSize=1000&method=content.wallpaper.mostpopular.bycategory&imsi=460026408885439&format=json&deviceId=861022004611283&appSecret=2b45451eb109";
 		s = "sign=F853324F59EAA5549903B969AF0FAAA0&timestamp=1500456300161&operation=plus&v=1.0&appId=app_gkt_lookerplus_5714&method=content.content2user.save&imsi=460026408885439&format=json&type=W&contentId=f4e324dc-fd7b-4b7e-af96-0034ac46e170&deviceId=861022004611283&appSecret=2b45451eb109";
 		s = "sign=DCE2C9803B11A810D2E4327CED19DD02&timestamp=1500456320293&v=1.0&appId=app_gkt_lookerplus_5714&pageNo=0&pageSize=1000&method=content.content2user.list&imsi=460026408885439&format=json&type=W&deviceId=861022004611283&appSecret=2b45451eb109";
@@ -201,7 +191,7 @@ public class HttpUtil {
 
 		String encryptStr = AESUtil.encrypt(builder.toString(), key);
 
-		String result = doPost(a, "http://172.30.120.57:8888/content/app/dispatch/encrypt").getContent();
+		String result = doPost(encryptStr, "http://172.30.120.57:8888/content/app/dispatch/encrypt").getContent();
 
 		Map<String, String> map = objectMapper.readValue(result, new TypeReference<Map<String, String>>() {
 		});
