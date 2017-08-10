@@ -1,6 +1,7 @@
 package std.demo.local.timing;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -14,7 +15,7 @@ public class MyJob implements Job {
 		
 		System.out.println("myjob start\t" + LocalDateTime.now());
 		try {
-			Thread.sleep(2000);
+			TimeUnit.SECONDS.sleep(2);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
