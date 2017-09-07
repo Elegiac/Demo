@@ -22,14 +22,14 @@ public class DataImgUtil {
 	 */
 	public static void main(String[] args) throws IOException {
 		String s = getImgDataURI();
-		FileUtils.createFile("C:\\Users\\sinoadmin\\Desktop\\", "dataUri.txt", DATA_URI_PREFIX+s);
+		FileUtils.createFile("C:\\Users\\yeahmobi\\Desktop\\", "dataUri.txt", DATA_URI_PREFIX+s);
 		//getImgByDataURI(s);
 	}
 
 	public static String getImgDataURI() throws FileNotFoundException,
 			IOException {
 		FileImageInputStream imageinput = new FileImageInputStream(new File(
-				"C:\\Users\\sinoadmin\\Desktop\\未标题-1.png"));
+				"C:\\Users\\yeahmobi\\Desktop\\qrcode_for_gh_fb60111b11a1_430.jpg"));
 		byte[] by = new byte[(int) imageinput.length()];
 		imageinput.read(by);
 

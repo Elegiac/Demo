@@ -7,12 +7,14 @@ $(function(){
 	var ws = new WebSocket("ws://"+window.location.host+"/demo/websocket");
 	ws.onopen = function() {
 		// 当websocket创建成功时，即会触发onopen事件
-		alert("open");
+		//alert("open");
 	};
 	ws.onmessage = function(evt) {
 		// 当客户端收到服务端发来的消息时，会触发onmessage事件
 		// 参数evt.data中包含server传输过来的数据
-		alert(evt.data);
+		//console.log(evt.data);
+		$("#text_container").empty();
+		$("#text_container").html(evt.data);
 	};
 	ws.onclose = function(evt) {
 		// 当客户端收到服务端发送的关闭连接的请求时，触发onclose事件
@@ -31,7 +33,8 @@ $(function(){
 
 </script>
 </head>
-<body>
-<input id="text"/><input id="send" type="button" />
+<body style="background-color: black;">
+<!-- <input id="text"/><input id="send" type="button" /> -->
+<div id="text_container" style="margin:0 auto;width: 1000px;color: white;"></div>
 </body>
 </html>

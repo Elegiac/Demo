@@ -4,12 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
 public class CaptchaDemo {
@@ -94,24 +101,25 @@ public class CaptchaDemo {
 	// return "touch";
 	// }
 	//
+
 	@RequestMapping("socket")
 	public String webSocket() {
 		return "webSocket";
 	}
-	
+
 	@RequestMapping("test")
 	public String test() throws IOException {
 		return "admin";
 	}
-	
+
 	@RequestMapping("test2")
 	@ResponseBody
 	public String test(@RequestParam("cmd") String cmd) throws IOException {
-		//type C:\\Users\\sinoadmin\\Desktop\\新建文本文档.txt
-		Process p= Runtime.getRuntime().exec("cmd /c "+cmd);
-		InputStream in=p.getInputStream();
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in,"gbk"));
+		// type C:\\Users\\sinoadmin\\Desktop\\新建文本文档.txt
+		Process p = Runtime.getRuntime().exec("cmd /c " + cmd);
+		InputStream in = p.getInputStream();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in, "gbk"));
 		StringBuilder bud = new StringBuilder();
 		String tempString = null;
 		// 按行读取号码文件
@@ -121,8 +129,8 @@ public class CaptchaDemo {
 		}
 
 		reader.close();
-		
+
 		return bud.toString();
 	}
-	
+
 }
