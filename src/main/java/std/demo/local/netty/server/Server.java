@@ -8,7 +8,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 //netty源码分析
 //https://segmentfault.com/a/1190000007282628
-//http://www.jianshu.com/p/c5068caab217
+//http://www.jianshu.com/u/4fdc8c2315e8
 public class Server {
 	/**
 	 * 服务端监听的端口地址
