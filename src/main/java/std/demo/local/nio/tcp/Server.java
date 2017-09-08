@@ -18,7 +18,7 @@ public class Server {
 	// TCP服务端通道
 	private ServerSocketChannel channel = null;
 
-	boolean shutdown = false;
+	volatile boolean shutdown = false;
 
 	public Server(int port) {
 		try {
