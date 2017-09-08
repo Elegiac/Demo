@@ -1,5 +1,6 @@
 package std.demo;
 
+//http://www.cnblogs.com/greatfish/p/5771548.html
 public class Text {
 	public static int k = 0;
 	public static Text t1 = new Text("t1");
