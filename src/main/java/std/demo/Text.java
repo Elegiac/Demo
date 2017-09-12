@@ -1,6 +1,7 @@
 package std.demo;
 
 //http://www.cnblogs.com/greatfish/p/5771548.html
+//http://www.cnblogs.com/guodefu909/p/4991612.html
 public class Text {
 	public static int k = 0;
 	public static Text t1 = new Text("t1");
@@ -12,6 +13,7 @@ public class Text {
 	{
 		print("构造块");
 	}
+
 	static {
 		print("静态块");
 	}
