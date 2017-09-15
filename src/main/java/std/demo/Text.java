@@ -2,6 +2,7 @@ package std.demo;
 
 //http://www.cnblogs.com/greatfish/p/5771548.html
 //http://www.cnblogs.com/guodefu909/p/4991612.html
+//http://blog.csdn.net/rabbit_in_android/article/details/50382739
 public class Text {
 	public static int k = 0;
 	public static Text t1 = new Text("t1");
