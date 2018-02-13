@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,29 @@ public class JDBCUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int executeUpdate(String sql, Object... params) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			int index = 1;
+			for (Object param : params) {
+				pstmt.setObject(index++, param);
+			}
+
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return 0;
 	}
 
 	public List<Map<String, Object>> queryForList(String sql) {
@@ -88,12 +110,16 @@ public class JDBCUtil {
 	}
 
 	public static void main(String[] args) {
-		JDBCUtil jdbc = new JDBCUtil("com.mysql.cj.jdbc.Driver", "jdbc:mysql://172.30.10.81:3306/paytransdb",
-				"gktdbuser", "gktdb123654");
+		JDBCUtil jdbc = new JDBCUtil("com.mysql.cj.jdbc.Driver", "jdbc:mysql://10.2.1.22:3306/paytransdb", "gktdb_read",
+				"gktdb1qaz2ws");
 
-		List<Map<String, Object>> resultList = jdbc.queryForList("select * from t_application limit 10");
-		
-		for(Map<String, Object>map:resultList) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(
+				"select createTime,amount_charged,payment_transaction_status_code from t_pay_tpay_merged_dn ORDER BY createTime");
+
+		List<Map<String, Object>> resultList = jdbc.queryForList(sql.toString());
+
+		for (Map<String, Object> map : resultList) {
 			System.out.println(map);
 		}
 
