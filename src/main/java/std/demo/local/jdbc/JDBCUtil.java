@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.springframework.jdbc.BadSqlGrammarException;
-
 public class JDBCUtil {
 
 	private Connection conn;
@@ -149,22 +147,5 @@ public class JDBCUtil {
 			} catch (SQLException e) {
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		JDBCUtil jdbc = new JDBCUtil("com.mysql.cj.jdbc.Driver", "jdbc:mysql://10.2.1.22:3306/paytransdb", "gktdb_read",
-				"gktdb1qaz2ws");
-
-		StringBuilder sql = new StringBuilder();
-		sql.append("select count(1) from t_pay_tpay_merged_dn ORDER BY createTime");
-
-		List<Map<String, Object>> resultList = jdbc.queryForList(sql.toString());
-
-		for (Map<String, Object> map : resultList) {
-			System.out.println(map);
-		}
-
-		jdbc.close();
-
 	}
 }
