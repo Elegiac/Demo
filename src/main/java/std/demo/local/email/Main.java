@@ -34,7 +34,7 @@ public class Main {
 		}
 		return "发送失败";
 	}
-
+	
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		send("", "测试发送邮件", "测试内容");
 	}

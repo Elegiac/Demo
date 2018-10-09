@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.jdbc.BadSqlGrammarException;
 
 public class JDBCUtil {
 
@@ -22,6 +25,25 @@ public class JDBCUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getCount(String sql, Object... params) {
+		List<Map<String, Object>> resultList = queryForList(sql, params);
+		if (resultList.size() != 1) {
+			throw new IllegalArgumentException();
+		}
+
+		Map<String, Object> resultMap = resultList.get(0);
+
+		if (resultMap.size() != 1) {
+			throw new IllegalArgumentException();
+		}
+
+		for (String key : resultMap.keySet()) {
+			return Integer.parseInt(Objects.toString(resultMap.get(key), "0"));
+		}
+
+		return 0;
 	}
 
 	public int executeUpdate(String sql, Object... params) {
@@ -47,7 +69,22 @@ public class JDBCUtil {
 		return 0;
 	}
 
-	public List<Map<String, Object>> queryForList(String sql) {
+	public Map<String, Object> queryForMap(String sql, Object... params) {
+		List<Map<String, Object>> resultList = queryForList(sql, params);
+
+		if (resultList.isEmpty()) {
+			return null;
+		}
+
+		if (resultList.size() > 1) {
+			throw new IllegalArgumentException("More than one result!!");
+		}
+
+		return resultList.get(0);
+
+	}
+
+	public List<Map<String, Object>> queryForList(String sql, Object... params) {
 
 		if (sql == null) {
 			throw new NullPointerException("SQL can not be null");
@@ -69,6 +106,11 @@ public class JDBCUtil {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
+
+			for (int i = 1; i <= params.length; i++) {
+				pstmt.setObject(i, params[i - 1]);
+			}
+
 			rs = pstmt.executeQuery();
 
 			ResultSetMetaData metaData = rs.getMetaData();
@@ -114,8 +156,7 @@ public class JDBCUtil {
 				"gktdb1qaz2ws");
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(
-				"select createTime,amount_charged,payment_transaction_status_code from t_pay_tpay_merged_dn ORDER BY createTime");
+		sql.append("select count(1) from t_pay_tpay_merged_dn ORDER BY createTime");
 
 		List<Map<String, Object>> resultList = jdbc.queryForList(sql.toString());
 

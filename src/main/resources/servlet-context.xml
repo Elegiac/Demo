@@ -14,7 +14,7 @@
 		<property name="host" value="smtp.qq.com" />
 		<property name="port" value="587" />
 		<property name="username" value="1024925667@qq.com" />
-		<property name="password" value="xraluzewximnbcbg" />
+		<property name="password" value="bevieedppwfnbcei" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>

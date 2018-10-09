@@ -33,8 +33,7 @@ $(function(){
 
 </script>
 </head>
-<body style="background-color: black;">
-<!-- <input id="text"/><input id="send" type="button" /> -->
-<div id="text_container" style="margin:0 auto;width: 1000px;color: white;"></div>
+<body>
+<div style="border: 1px solid #00F;width: 100px;height: 100px;"></div>
 </body>
 </html>

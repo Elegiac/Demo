@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+
+	<span id="content">
+		快来领取支付宝跨年红包！1月1日起还有机会额外获得专享红包哦！复制此消息，打开最新版支付宝就能领取！4j6I0864Za </span>
+	<button id="copyBT">复制</button>
+	<script>
+		$(function() {
+			document.getElementById('copyBT').addEventListener('click',
+					copyArticle, false);
+
+		})
+
+		function copyArticle(event) {
+			const range = document.createRange();
+			range.selectNode(document.getElementById('content'));
+
+			const selection = window.getSelection();
+			if (selection.rangeCount > 0)
+				selection.removeAllRanges();
+			selection.addRange(range);
+			document.execCommand('copy');
+			alert("复制成功！");
+		}
+	</script>
+
+	
+
+</body>
+</html>

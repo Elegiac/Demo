@@ -1,5 +1,7 @@
 package std.demo.local.netty.server;
 
+import java.nio.charset.Charset;
+
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -19,8 +21,8 @@ public class StringServerInitializer extends ChannelInitializer<SocketChannel> {
 				Delimiters.lineDelimiter()));
 
 		// 字符串解码 和 编码
-		pipeline.addLast("decoder", new StringDecoder());
-		pipeline.addLast("encoder", new StringEncoder());
+		pipeline.addLast("decoder", new StringDecoder(Charset.forName("xxxx")));
+		pipeline.addLast("encoder", new StringEncoder(Charset.forName("xxxx")));
 
 		// 自己的逻辑Handler
 		pipeline.addLast("handler", new StringServerHandler());

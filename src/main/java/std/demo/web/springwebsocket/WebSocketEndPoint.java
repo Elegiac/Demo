@@ -1,17 +1,9 @@
 package std.demo.web.springwebsocket;
 
-import java.io.FileInputStream;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
-import std.demo.SocketTest;
 
 public class WebSocketEndPoint extends TextWebSocketHandler {
 
@@ -30,12 +22,6 @@ public class WebSocketEndPoint extends TextWebSocketHandler {
 			throws Exception {
 		// 链接建立
 		System.out.println("connection established");
-		
-		SocketTest test = new SocketTest(session);
-
-		Thread t = new Thread(test);
-		t.start();
-		
 	}
 
 	@Override

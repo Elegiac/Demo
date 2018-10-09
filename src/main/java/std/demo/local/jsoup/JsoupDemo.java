@@ -26,7 +26,6 @@ public class JsoupDemo {
 			Element element = it.next();
 			System.out.println(element.attr("href"));
 		}
-
 		
 	}
 

@@ -3,6 +3,7 @@ package std.demo.local.jdbc;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ public class JDBCDemo {
 		private String propertyName;
 		private Class<?> propertyClass;
 		private String getOrSetPropertyName;
-		
+
 		public String getPropertyName() {
 			return propertyName;
 		}
@@ -62,13 +63,13 @@ public class JDBCDemo {
 
 	private static Connection getConn() {
 		String driver = "com.mysql.cj.jdbc.Driver";
-		String url = "jdbc:mysql://localhost:3306/test?serverTimezone=GMT";
-		String username = "root";
-		String password = "mysql";
+		String url = "jdbc:mysql://127.0.0.1:3306/paytransdb?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+		String username = "test";
+		String password = "test";
 		Connection conn = null;
 		try {
 			Class.forName(driver); // classLoader,加载对应驱动
-			conn = (Connection) DriverManager.getConnection(url, username, password);
+			conn = DriverManager.getConnection(url, username, password);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -76,30 +77,26 @@ public class JDBCDemo {
 		}
 		return conn;
 	}
-	
-	
-	
+
 	public static void main(String[] args) throws SQLException {
-		// Connection conn = getConn();
+		Connection conn = getConn();
+		DatabaseMetaData dbMetaData = conn.getMetaData();
+		String[] types = { "TABLE" };
+		ResultSet tabs = dbMetaData.getTables("", "", "", types);
 
-		// DatabaseMetaData dbMetaData = conn.getMetaData();
-		//
-		// String[] types = { "TABLE" };
-		//
-		// ResultSet tabs = dbMetaData
-		// .getTables(null, null, null, types/* 只要表就好了 */);
-		//
-		// List<String> tables = new ArrayList<>();
-		// while (tabs.next()) {
-		// // 只要表名这一列
-		// tables.add((String) tabs.getObject("TABLE_NAME"));
-		//
-		// }
-		// System.out.println(tables);
+		while (tabs.next()) {
+			String tableName = tabs.getObject("TABLE_NAME").toString();
+			if(tableName.endsWith("_mo")||tableName.endsWith("_dn")||tableName.endsWith("_mt")) {
+				tableName = tableName.replace("_pay", "");
+				String channelName = tableName.split("_")[1];
+				System.err.println(channelName);
+			}
+		}
 
-		// conn.close();
+		conn.close();
 
-		generateBeanFromDataBase("market_customer", "com.dzdc.bean", "C:\\Users\\sinoadmin\\Desktop\\", true);
+		// generateBeanFromDataBase("market_customer", "com.dzdc.bean",
+		// "C:\\Users\\sinoadmin\\Desktop\\", true);
 	}
 
 	public static void generateBeanFromDataBase(String tableName, String packageName, String createPath,
@@ -130,7 +127,7 @@ public class JDBCDemo {
 				}
 
 				MetaData data = new MetaData();
-				data.setColumnName(metaData.getColumnName(i+1));
+				data.setColumnName(metaData.getColumnName(i + 1));
 				data.setPropertyName(camelCase(metaData.getColumnName(i + 1)));
 				data.setPropertyClass(clz);
 				data.setGetOrSetPropertyName(camelCase(metaData.getColumnName(i + 1), false));
@@ -143,55 +140,6 @@ public class JDBCDemo {
 
 			String generateClassName = camelCase(tableName, false);
 
-
-//			<resultMap type="Customer" id="customer_result">
-//			<id property="id" column="id"/>  
-//	        <result property="nickname" column="nickname"/>  
-//	        <result property="realName" column="real_name"/>  
-//	        <result property="loginName" column="login_name"/>  
-//	        <result property="password" column="password"/>
-//	        <result property="phone" column="phone"/>  
-//	        <result property="emailAddress" column="email_address"/>  
-//	        <result property="registerTime" column="register_time"/>  
-//	        <result property="lastLoginTime" column="last_login_time"/>
-//	        </resultMap>
-			
-			String primaryKey = "id";
-			
-			StringBuilder typeAliases = new StringBuilder();
-			typeAliases.append("<resultMap type=\"");
-			typeAliases.append(generateClassName);
-			typeAliases.append("\" id=\"");
-			typeAliases.append(lowerCaseFirstLetter(generateClassName));
-			typeAliases.append("_aliases\">\r\n");
-			
-			
-			
-			for (MetaData data : metaDataInfo) {
-				typeAliases.append("\t");
-				if(data.getColumnName().equals(primaryKey)){
-					typeAliases.append("<id property=\"");
-				}else{
-					typeAliases.append("<result property=\"");
-				}
-				
-				typeAliases.append(data.getPropertyName());
-				typeAliases.append("\" column=\"");
-				typeAliases.append(data.getColumnName());
-				typeAliases.append("\"/>\r\n");
-				//nickname" column="nickname"/>
-			}
-			typeAliases.append("</resultMap>");
-			
-			System.out.println(typeAliases);
-			
-			if(1==1){
-				return;
-			}
-			
-			
-			
-			
 			StringBuilder builder = new StringBuilder();
 
 			builder.append("package ");

@@ -20,19 +20,18 @@ public class SpringMailSender {
 
 		SpringMailService s = new SpringMailService();
 
-		String to = "liulingzn@163.com";
+		String to = "2564425418@qq.com";
 
 		String subject = "test";
 		String text = "test";
-		File file = new File("C:\\Users\\sinoadmin\\Desktop\\选颜色.zip");
+		File file = new File("E:\\phpStudy\\WWW\\test\\test.jpg");
 
-		String htmlText = "<body><p>Hello Html Email</p><img src='cid:file'/></body>";
+		String htmlText = "<body><p>Hello Html Email</p><a href=\"https://qr.alipay.com/c1x066031njpnmqaugbmldb\"><img src='cid:file'/></a></body>";
 		Map<String, File> dataMap = new HashMap<>();
 		dataMap.put("file", file);
-		s.sendSimpleMessage(subject, text, to);
+		//s.sendSimpleMessage(subject, text, to);
 		//s.sendMessageWithAttachment(to, subject, text, file, file.getName());
 		
-		//s.sendRichMessage(to, subject, htmlText, dataMap);
-
+		s.sendRichMessage(to, subject, htmlText, dataMap);
 	}
 }

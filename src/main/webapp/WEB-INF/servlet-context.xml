@@ -35,4 +35,10 @@
     <!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> -->
     <bean id="multipartResolver" class="std.demo.web.upload.CustomMultipartResolver"/>
     
+    <mvc:interceptors>
+	    <mvc:interceptor>
+	        <mvc:mapping path="/**"/>
+	        <bean class="std.demo.web.interceptor.LoginInterceptor"/>
+	    </mvc:interceptor>
+	</mvc:interceptors>
 </beans>

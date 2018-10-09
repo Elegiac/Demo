@@ -5,6 +5,7 @@ import java.util.List;
 import std.demo.local.springmybatis.entity.Classes;
 
 public interface ClassMapper {
+
 	List<Classes> findClasses();
 
 	List<Classes> findClassesWithStudents();

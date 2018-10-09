@@ -3,6 +3,7 @@ package std.demo.local.netty.server;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoop;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
@@ -10,6 +11,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 //https://segmentfault.com/a/1190000007282628
 //http://www.jianshu.com/u/4fdc8c2315e8
 //http://www.jianshu.com/p/493b36e439bc
+//并发编程
+//http://ifeve.com/java_lock_see1/
 public class Server {
 	/**
 	 * 服务端监听的端口地址
@@ -17,6 +20,8 @@ public class Server {
 	private static final int portNumber = 7878;
 
 	public static void main(String[] args) throws InterruptedException {
+		System.out.println(1);
+		
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
@@ -25,12 +30,19 @@ public class Server {
 			b.channel(NioServerSocketChannel.class);
 			// b.childHandler(new StringServerInitializer());
 			b.childHandler(new StringServerInitializer());
-
 			// 服务器绑定端口监听
 			ChannelFuture f = b.bind(portNumber).sync();
 			// 监听服务器关闭监听
 			f.channel().closeFuture().sync();
-
+			
+			f.channel().eventLoop().execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 			// 可以简写为
 			// b.bind(portNumber).sync().channel().closeFuture().sync();
 		} finally {

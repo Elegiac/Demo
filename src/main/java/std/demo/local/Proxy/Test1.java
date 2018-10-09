@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Arrays;
 
 import std.demo.SystemUtils;
 import sun.misc.ProxyGenerator;
@@ -18,9 +17,9 @@ public class Test1 {
 	public static void main(String[] args) throws NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
-		createProxyClassFile();
+		//createProxyClassFile();
 
-		System.exit(0);
+		//System.exit(0);
 
 		// 方法 1: 该方法用于获取指定代理对象所关联的调用处理器
 		// static InvocationHandler getInvocationHandler(Object proxy)
@@ -45,25 +44,31 @@ public class Test1 {
 				return null;
 			}
 		};
-		Object proxy = Proxy.newProxyInstance(classLoader, new Class[] { TestInterface.class, TestInterface2.class },
-				handler);
+		Object proxy = Proxy.newProxyInstance(classLoader,
+				new Class[] { TestInterface.class, TestInterface2.class, TestInterface3.class }, handler);
 
 		// 继承了java.lang.reflect.Proxy类
-		System.err.println(proxy.getClass().getSuperclass());
+		// System.err.println(proxy.getClass().getSuperclass());
 		// 实现了接口TestInterface TestInterface2
-		System.err.println(Arrays.toString(proxy.getClass().getInterfaces()));
+		// System.err.println(Arrays.toString(proxy.getClass().getInterfaces()));
 
-		System.out.println(proxy.toString());
+		System.err.println(proxy.getClass().getName());
+
 		System.out.println(((TestInterface) proxy).test1());
 		System.out.println(((TestInterface2) proxy).test2());
+		System.out.println(((TestInterface3) proxy).test3());
+	}
 
+	private interface TestInterface3 {
+		String test3();
 	}
 
 	public static void createProxyClassFile() {
 		String name = "ProxySubject";
 		String path = SystemUtils.DESKTOP.getAbsolutePath() + File.separator;
 
-		byte[] data = ProxyGenerator.generateProxyClass(name, new Class[] { TestInterface.class });
+		byte[] data = ProxyGenerator.generateProxyClass(name,
+				new Class[] { TestInterface.class, TestInterface2.class, TestInterface3.class });
 		try {
 			FileOutputStream out = new FileOutputStream(path + name + ".class");
 			out.write(data);

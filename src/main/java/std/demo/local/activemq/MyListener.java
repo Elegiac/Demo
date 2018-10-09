@@ -1,5 +1,7 @@
 package std.demo.local.activemq;
 
+import java.time.LocalDateTime;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -9,14 +11,12 @@ public class MyListener implements MessageListener {
 
 	@Override
 	public void onMessage(Message message) {
-		System.out.println("onMessage");
 		TextMessage mess = (TextMessage) message;
 		try {
-			System.out.println(mess.getText());
+			System.err.println(LocalDateTime.now() + ":" + mess.getText());
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }

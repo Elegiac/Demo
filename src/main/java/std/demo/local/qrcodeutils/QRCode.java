@@ -149,7 +149,7 @@ public class QRCode {
 			throws WriterException, IOException {
 		BitMatrix bitMatrix = generateQRCodeImg(DEFAULT_WIDTH, DEFAULT_HEIGHT,
 				content);
-		Path path = FileSystems.getDefault().getPath(filePath, fileName);
+		Path path = FileSystems.getDefault().getPath(filePath);
 		MatrixToImageWriter.writeToPath(bitMatrix, DEFAULT_FORMAT, path);// 输出图像
 	}
 
@@ -161,14 +161,15 @@ public class QRCode {
 		MatrixToImageWriter.writeToPath(bitMatrix, DEFAULT_FORMAT, path);// 输出图像
 	}
 
-	public static void main(String[] args) throws WriterException, IOException,
-			NotFoundException {
-		String filePath = "‪C:\\Users\\yeahmobi\\Desktop\\";
-		String fileName = "test.png";
-		String content = "扫扫扫，有什么好扫的";
+	public static void main(String[] args) throws WriterException, IOException, NotFoundException {
+		String filePath = "C:\\Users\\yeahmobi\\Desktop\\";
+		String fileName = "bhR4~q.png";
+		String content = "https://qr.alipay.com/tsx03898wyeexhnkndaduc2";
 		QRCode q = new QRCode();
-		 q.writeImgToPath(content, filePath, fileName);
+		 //q.writeImgToPath(content, "C:\\Users\\yeahmobi\\Desktop\\test.png", fileName);
 
-		//System.out.println(q.parseQRCodeImg(filePath + fileName));
+		System.out.println(q.parseQRCodeImg(filePath + fileName));
+
+
 	}
 }

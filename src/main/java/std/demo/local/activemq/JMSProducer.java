@@ -1,6 +1,7 @@
 package std.demo.local.activemq;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -76,6 +77,16 @@ public class JMSProducer {
 	 */
 	public static void sendMessage(Session session,
 			MessageProducer messageProducer) throws Exception {
+		
+		while(true) {
+			TextMessage message = session.createTextMessage("测试");
+			
+			messageProducer.send(message);
+			
+			session.commit();
+			
+			TimeUnit.MINUTES.sleep(1);
+		}
 
 		// for (int i = 0; i < 10; i++) {
 		// // 创建一条文本消息
@@ -106,24 +117,24 @@ public class JMSProducer {
 		// }
 		// in.close();
 
-		Scanner scan = new Scanner(System.in);
-		String input;
-		while (true) {
-			input = scan.next();
-			if ("exit".equalsIgnoreCase(input)) {
-				break;
-			}
-			if ("".equals(input.trim())) {
-				continue;
-			}
-			
-			// 创建一条文本消息
-			TextMessage message = session.createTextMessage(input);
-			// 通过消息生产者发出消息
-			messageProducer.send(message);
-			System.out.println("ActiveMQ 发送消息：" + input);
-			session.commit();
-		}
-		scan.close();
+//		Scanner scan = new Scanner(System.in);
+//		String input;
+//		while (true) {
+//			input = scan.next();
+//			if ("exit".equalsIgnoreCase(input)) {
+//				break;
+//			}
+//			if ("".equals(input.trim())) {
+//				continue;
+//			}
+//			
+//			// 创建一条文本消息
+//			TextMessage message = session.createTextMessage(input);
+//			// 通过消息生产者发出消息
+//			messageProducer.send(message);
+//			System.out.println("ActiveMQ 发送消息：" + input);
+//			session.commit();
+//		}
+//		scan.close();
 	}
 }
