@@ -3,6 +3,14 @@ package std.demo.local.synchronize;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * CountDownLatch 
+ * 线程调用await()方法后会阻塞 
+ * 在初始化计数值减为0时所有调用await()的线程才会继续执行
+ * 
+ * @author yeahmobi
+ *
+ */
 public class CountDownLatchDemo {
 
 	public static void main(String[] args) throws InterruptedException {

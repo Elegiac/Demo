@@ -3,6 +3,14 @@ package std.demo.local.synchronize;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * CyclicBarrier 
+ * 线程调用await()方法后会阻塞 
+ * 在有初始化时指定数目的线程调用了await()方法 所有阻塞的线程才会继续执行
+ * 
+ * @author yeahmobi
+ *
+ */
 public class CyclicBarrierDemo {
 
 	public static void main(String[] args) {

@@ -3,7 +3,14 @@ package std.demo.local.synchronize;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Semaphore控制同时执行的线程数
+ * 
+ * @author yeahmobi
+ *
+ */
 public class SemaphoreDemo {
+
 	public static void main(String[] args) {
 		// 构造方法指定支持同时访问的授权数量
 		Semaphore semaphore = new Semaphore(5);
