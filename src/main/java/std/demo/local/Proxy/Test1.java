@@ -16,7 +16,9 @@ public class Test1 {
 
 	public static void main(String[] args) throws NoSuchMethodException, SecurityException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-
+		
+		
+		
 		//createProxyClassFile();
 
 		//System.exit(0);
